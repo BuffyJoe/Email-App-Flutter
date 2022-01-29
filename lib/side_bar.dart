@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 class SideBar extends StatelessWidget {
+  final Function _changeIndexNumber;
+
+  SideBar(this._changeIndexNumber);
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -29,85 +32,101 @@ class SideBar extends StatelessWidget {
               ),
             ),
           ),
-          const ListTile(
+          ListTile(
             leading: Icon(Icons.login),
             title: Text('Log-in'),
-            onTap: null,
+            onTap: () {
+              _changeIndexNumber(1);
+              Navigator.pop(context);
+            },
           ),
-          const ListTile(
+          ListTile(
             leading: Icon(Icons.home_filled),
             title: Text('Home'),
-            onTap: null,
+            onTap: () {
+              _changeIndexNumber(0);
+              Navigator.pop(context);
+            },
           ),
           Container(
             child: Column(
               children: [
-                ListTile(
+                ExpansionTile(
                   leading: Icon(Icons.all_inbox_rounded),
                   title: Text('All Messages'),
                   trailing: Icon(Icons.expand_more_outlined),
-                ),
-                Container(
-                  height: 400,
-                  child: ListView(
-                    padding: EdgeInsets.fromLTRB(20, 2, 2, 2),
-                    children: [
-                      ListTile(
-                        leading: Icon(Icons.inbox_rounded),
-                        title: Text('Primary'),
-                        onTap: null,
-                      ),
-                      ListTile(
-                        leading: Icon(Icons.people_outline_outlined),
-                        title: Text('Social'),
-                        onTap: null,
-                      ),
-                      const ListTile(
-                        leading: Icon(
-                          Icons.label,
-                          color: Colors.blue,
-                        ),
+                  children: [
+                    Container(
+                      height: 400,
+                      child: ListView(
+                        padding: EdgeInsets.fromLTRB(20, 2, 2, 2),
+                        children: [
+                          ListTile(
+                            leading: Icon(Icons.inbox_rounded),
+                            title: Text('Primary'),
+                            onTap: null,
+                          ),
+                          ListTile(
+                            leading: Icon(Icons.people_outline_outlined),
+                            title: Text('Social'),
+                            onTap: null,
+                          ),
+                          ListTile(
+                            leading: Icon(
+                              Icons.label,
+                            ),
 
-                        title: Text('Promotions'),
-                        // style: ListTileStyle.list,
+                            title: Text('Promotions'),
+                            // style: ListTileStyle.list,
+                          ),
+                          ListTile(
+                            leading: Icon(
+                              Icons.info,
+                            ),
+                            title: Text('Spam'),
+                          ),
+                          ListTile(
+                            leading: Icon(Icons.drafts),
+                            title: Text('Drafts'),
+                            onTap: null,
+                          ),
+                          ListTile(
+                            leading: Icon(Icons.send),
+                            title: Text('Sent'),
+                            onTap: null,
+                          ),
+                          ListTile(
+                            leading: Icon(Icons.label),
+                            title: Text('Proposal'),
+                            onTap: null,
+                          ),
+                          ListTile(
+                            leading: Icon(Icons.inbox_rounded),
+                            title: Text('Primary'),
+                            onTap: null,
+                          ),
+                          ListTile(
+                            leading: Icon(
+                              Icons.star_border_purple500_rounded,
+                            ),
+                            title: Text('starred'),
+                          ),
+                        ],
                       ),
-                      ListTile(
-                        leading: Icon(
-                          Icons.info,
-                          color: Colors.blue,
-                        ),
-                        title: Text('Spam'),
-                      ),
-                      ListTile(
-                        leading: Icon(Icons.drafts),
-                        title: Text('Drafts'),
-                        onTap: null,
-                      ),
-                      ListTile(
-                        leading: Icon(Icons.send),
-                        title: Text('Sent'),
-                        onTap: null,
-                      ),
-                      ListTile(
-                        leading: Icon(Icons.label),
-                        title: Text('Proposal'),
-                        onTap: null,
-                      ),
-                      ListTile(
-                        leading: Icon(Icons.inbox_rounded),
-                        title: Text('Primary'),
-                        onTap: null,
-                      ),
-                      ListTile(
-                        leading: Icon(
-                          Icons.star_border_purple500_rounded,
-                        ),
-                        title: Text('starred'),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                const ListTile(
+                ListTile(
+                  leading: Icon(
+                    Icons.contact_mail,
+                  ),
+                  title: Text('Contacts'),
+                  onTap: () {
+                    _changeIndexNumber(4);
+                    Navigator.pop(context);
+                  },
+                ),
+                ListTile(
                   leading: Icon(
                     Icons.settings,
                   ),
@@ -120,6 +139,10 @@ class SideBar extends StatelessWidget {
                   title: Text(
                     'Activity',
                   ),
+                  onTap: () {
+                    _changeIndexNumber(2);
+                    Navigator.pop(context);
+                  },
                 ),
               ],
             ),

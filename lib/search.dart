@@ -6,13 +6,12 @@ class Search extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [Text('Hurray'), TextField()],
-        ),
-      ),
+          padding: const EdgeInsets.all(0),
+          child: Text(
+            'Fetching results...',
+            style: TextStyle(fontSize: 20, fontFamily: 'Footlight'),
+          )),
     );
   }
 }

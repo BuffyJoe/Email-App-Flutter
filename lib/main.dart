@@ -1,55 +1,124 @@
 import 'package:flutter/material.dart';
+import 'package:mail_app/compose.dart';
+import 'package:mail_app/favourite.dart';
+import 'package:mail_app/Recently_Contacted.dart';
 import 'package:mail_app/home.dart';
+import 'package:mail_app/inbox.dart';
+import 'package:mail_app/models/contact_model.dart';
+import 'package:mail_app/search.dart';
 import 'package:mail_app/side_bar.dart';
 
 void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: ThemeData.from(
+        colorScheme: ColorScheme.fromSwatch(
+          primarySwatch: Colors.blue,
+          backgroundColor: Colors.greenAccent,
+        ),
+      ),
+      title: 'Flutter App',
+      home: MyHomePage(),
+      debugShowCheckedModeBanner: false,
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<MyHomePage> {
   // This widget is the root of your application.
-  final List<Map<String, Object>> contacts = [
-    {'email': 'okaforbestkid@gmail.com', 'name': 'Nwoye'},
-    {'email': 'okaforbestkid@gmail.com', 'name': 'Chukwunazaekpere'},
-    {'email': 'okaforbestkid@gmail.com', 'name': 'Esther'},
-    {'email': 'okaforbestkid@gmail.com', 'name': 'Okafor'},
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  final List<ContactModel> contacts = [
+    ContactModel(
+      email: 'sapa@gmail.com',
+      name: 'Sapa',
+      photo: 'assets/images/new.jpg',
+      selected: false,
+    ),
+    ContactModel(
+      name: 'sis',
+      email: 'Sis@gmail.com',
+      photo: 'assets/images/niniola.jpeg',
+      selected: false,
+    ),
+    ContactModel(
+      email: 'babe@gmail.com',
+      name: 'Babe',
+      photo: 'assets/images/niniola2.png',
+      selected: false,
+    ),
+    ContactModel(
+      email: 'dad@gmail.com',
+      name: 'Dad',
+      photo: 'assets/images/kaido.png',
+      selected: false,
+    ),
+    ContactModel(
+      email: 'bro@gmail.com',
+      name: 'Bro',
+      photo: 'assets/images/luffy.png',
+      selected: false,
+    ),
   ];
-  var indexNumber = 0;
 
-  void _changeIndexNumber() {
-    indexNumber++;
+  void _changeIndexNumber(int index) {
+    screenIndex = index;
     setState(() {
-      indexNumber;
-    });
-  }
-
-  void _reset() {
-    indexNumber = 0;
-    setState(() {
-      indexNumber;
+      screenIndex;
     });
   }
 
   var selectedItem = 0;
+  var screenIndex = 0;
+
+  void _onTap(int index) {
+    print(index);
+    if (index == 1) {
+      print('inside ${index}');
+      screenIndex = 0;
+      setState(() {
+        screenIndex;
+      });
+      return;
+    } else {
+      // index -= 1;
+      screenIndex = index;
+      setState(() {
+        print('outside $index');
+        screenIndex;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        resizeToAvoidBottomInset: true,
         backgroundColor: Colors.white,
-        drawer: SideBar(),
+        drawer: SideBar(_changeIndexNumber),
         appBar: AppBar(
-          backgroundColor: Colors.blueGrey,
-          leading: Icon(Icons.menu_rounded),
-          title: Text(
-            'Mass Messenger',
-            style: TextStyle(fontFamily: 'Footlight'),
+          backgroundColor: Colors.transparent,
+          iconTheme: IconThemeData(color: Colors.black),
+          elevation: 0,
+          foregroundColor: Colors.white,
+          title: TextField(
+            style: TextStyle(
+                fontFamily: 'Footlight',
+                color: Colors.white,
+                backgroundColor: Colors.white),
+            decoration: InputDecoration(
+                border: UnderlineInputBorder(), hintText: 'Search...'),
           ),
           actions: [
             Container(
@@ -58,61 +127,12 @@ class _MyAppState extends State<MyApp> {
             )
           ],
         ),
-        bottomNavigationBar: Container(
-          color: Colors.blue,
-          padding: EdgeInsets.zero,
-          child: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            showSelectedLabels: false,
-            showUnselectedLabels: false,
-            selectedFontSize: 12,
-            unselectedFontSize: 12,
-            unselectedItemColor: Colors.white,
-            selectedItemColor: Colors.white,
-            backgroundColor: Colors.blueGrey,
-            // onTap: (value) {
-            //   selectedItem = value;
-            //   setState(() {
-            //     selectedItem;
-            //   });
-            // },
-            items: [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Home',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.search),
-                label: 'Search',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.add_box),
-                label: 'Compose',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.chat_rounded),
-                label: 'Chat',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.favorite),
-                label: 'Favourite',
-              ),
-            ],
-            currentIndex: selectedItem,
-          ),
+        body:
+            // Favouritesss(context, screenIndex),
+            Padding(
+          padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+          child: Compose(contacts), //Screens[screenIndex],
         ),
-        body: indexNumber < contacts.length
-            ? Home(contacts, indexNumber, _changeIndexNumber, _reset)
-            : Card(
-                child: Column(
-                  children: [
-                    Text('data'),
-                    FloatingActionButton(
-                      onPressed: _reset,
-                    ),
-                  ],
-                ),
-              ),
       ),
     );
   }
