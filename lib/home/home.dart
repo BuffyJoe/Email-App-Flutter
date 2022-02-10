@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:mail_app/recent_mail.dart';
-import 'package:mail_app/search.dart';
+import 'package:mail_app/side_bar.dart';
 
 class Home extends StatelessWidget {
   // final List<Map<String, Object>> contacts;

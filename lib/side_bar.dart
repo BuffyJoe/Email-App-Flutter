@@ -1,9 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:mail_app/compose/compose.dart';
+import 'package:mail_app/contacts/contacts.dart';
+import 'package:mail_app/home/home.dart';
+import 'package:mail_app/main.dart';
+import 'package:mail_app/models/contact_model.dart';
 
 class SideBar extends StatelessWidget {
-  final Function _changeIndexNumber;
+  final List<ContactModel> contacts = [
+    ContactModel(
+      email: 'sapa@gmail.com',
+      name: 'Sapa',
+      photo: 'assets/images/new.jpg',
+      selected: false,
+    ),
+    ContactModel(
+      name: 'sis',
+      email: 'Sis@gmail.com',
+      photo: 'assets/images/niniola.jpeg',
+      selected: false,
+    ),
+    ContactModel(
+      email: 'babe@gmail.com',
+      name: 'Babe',
+      photo: 'assets/images/niniola2.png',
+      selected: false,
+    ),
+    ContactModel(
+      email: 'dad@gmail.com',
+      name: 'Dad',
+      photo: 'assets/images/kaido.png',
+      selected: false,
+    ),
+    ContactModel(
+      email: 'bro@gmail.com',
+      name: 'Bro',
+      photo: 'assets/images/luffy.png',
+      selected: false,
+    ),
+  ];
 
-  SideBar(this._changeIndexNumber);
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -36,15 +71,15 @@ class SideBar extends StatelessWidget {
             leading: Icon(Icons.login),
             title: Text('Log-in'),
             onTap: () {
-              _changeIndexNumber(1);
-              Navigator.pop(context);
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => MyHomePage()));
+              // this does not rebuild with the back arrow
             },
           ),
           ListTile(
             leading: Icon(Icons.home_filled),
             title: Text('Home'),
             onTap: () {
-              _changeIndexNumber(0);
               Navigator.pop(context);
             },
           ),
@@ -122,8 +157,10 @@ class SideBar extends StatelessWidget {
                   ),
                   title: Text('Contacts'),
                   onTap: () {
-                    _changeIndexNumber(4);
-                    Navigator.pop(context);
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (builder) {
+                      return Contacts(contacts);
+                    }));
                   },
                 ),
                 ListTile(
@@ -137,11 +174,13 @@ class SideBar extends StatelessWidget {
                     Icons.local_activity_rounded,
                   ),
                   title: Text(
-                    'Activity',
+                    'Compose',
                   ),
                   onTap: () {
-                    _changeIndexNumber(2);
-                    Navigator.pop(context);
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (builder) {
+                      return Compose(contacts);
+                    }));
                   },
                 ),
               ],

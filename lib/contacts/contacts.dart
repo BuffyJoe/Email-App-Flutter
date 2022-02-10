@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:mail_app/Recently_Contacted.dart';
-import 'package:mail_app/add_contact.dart';
+import 'package:mail_app/contacts/Recently_Contacted.dart';
+import 'package:mail_app/contacts/add_contact.dart';
 import 'package:mail_app/models/contact_model.dart';
+import 'package:mail_app/side_bar.dart';
 
-class Favourite extends StatefulWidget {
+class Contacts extends StatefulWidget {
   final List<ContactModel> contacts;
-  Favourite(this.contacts);
+  Contacts(this.contacts);
   @override
-  State<Favourite> createState() => _FavouriteState();
+  State<Contacts> createState() => _FavouriteState();
 }
 
-class _FavouriteState extends State<Favourite> {
+class _FavouriteState extends State<Contacts> {
   var indexNumber = 0;
   void _newContact(name, email, photo) {
     var _newContactInfo =
@@ -44,15 +45,11 @@ class _FavouriteState extends State<Favourite> {
     // builder should return the widget that would be in the modal sheet
   }
 
-  void screens(BuildContext context) {
-    var screens = [
-      AddContact(_newContact),
-    ];
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
+      drawer: SideBar(),
       // resizeToAvoidBottomInset: true,
       floatingActionButton: FloatingActionButton.small(
         onPressed: () {

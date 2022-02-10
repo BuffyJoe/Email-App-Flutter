@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-import './models/contact_model.dart';
+import '../models/contact_model.dart';
 
 class AddRecepient extends StatefulWidget {
   final List<ContactModel> contacts;

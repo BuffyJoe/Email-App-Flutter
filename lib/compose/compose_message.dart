@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mail_app/Sent/sent.dart';
+import 'package:mail_app/contacts/contacts.dart';
 import 'package:mail_app/models/contact_model.dart';
+import 'package:mail_app/models/message_model.dart';
 
 class ComposeMessage extends StatefulWidget {
   final List<ContactModel> _contacts;
@@ -80,7 +83,18 @@ class _ComposeMessageState extends State<ComposeMessage> {
                   SizedBox(
                     width: 10,
                   ),
-                  ElevatedButton(onPressed: () {}, child: Text('Done')),
+                  ElevatedButton(
+                      onPressed: () {
+                        print('clicked');
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (builder) {
+                          return Sent(MessageModel(
+                              Body: messageInput.text.toString(),
+                              Subject: subjectInput.text.toString(),
+                              receiver: widget._contacts));
+                        }));
+                      },
+                      child: Text('Done')),
                 ],
               ),
               preview == true
@@ -124,6 +138,7 @@ class _ComposeMessageState extends State<ComposeMessage> {
                             child: Text(
                               messageInput.text,
                               style: TextStyle(fontSize: 15),
+                              textAlign: TextAlign.justify,
                             ),
                           ),
                         ],

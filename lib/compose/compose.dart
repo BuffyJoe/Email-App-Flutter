@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mail_app/add_recepient.dart';
-import 'package:mail_app/compose_message.dart';
-import 'package:mail_app/inbox.dart';
+import 'package:mail_app/compose/add_recepient.dart';
+import 'package:mail_app/compose/compose_message.dart';
+import 'package:mail_app/Sent/sent.dart';
 import 'package:mail_app/models/contact_model.dart';
+import 'package:mail_app/side_bar.dart';
 
 class Compose extends StatelessWidget {
   final List<ContactModel> contacts;
@@ -19,6 +20,8 @@ class Compose extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
+      drawer: SideBar(),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           selectedContacts();

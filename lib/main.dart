@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:mail_app/compose.dart';
-import 'package:mail_app/favourite.dart';
-import 'package:mail_app/Recently_Contacted.dart';
-import 'package:mail_app/home.dart';
-import 'package:mail_app/inbox.dart';
+import 'package:mail_app/compose/compose.dart';
+import 'package:mail_app/contacts/contacts.dart';
+import 'package:mail_app/contacts/Recently_Contacted.dart';
+import 'package:mail_app/home/home.dart';
+import 'package:mail_app/Sent/sent.dart';
 import 'package:mail_app/models/contact_model.dart';
-import 'package:mail_app/search.dart';
 import 'package:mail_app/side_bar.dart';
 
 void main() {
@@ -16,10 +15,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData.from(
-        colorScheme: ColorScheme.fromSwatch(
-          primarySwatch: Colors.blue,
-          backgroundColor: Colors.greenAccent,
+      theme: ThemeData(
+        primaryColor: Colors.blue,
+        backgroundColor: Colors.white,
+        appBarTheme: AppBarTheme(
+          color: Colors.blue,
         ),
       ),
       title: 'Flutter App',
@@ -90,7 +90,6 @@ class _MyAppState extends State<MyHomePage> {
       });
       return;
     } else {
-      // index -= 1;
       screenIndex = index;
       setState(() {
         print('outside $index');
@@ -105,20 +104,18 @@ class _MyAppState extends State<MyHomePage> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         resizeToAvoidBottomInset: true,
-        backgroundColor: Colors.white,
-        drawer: SideBar(_changeIndexNumber),
+        backgroundColor: Theme.of(context).backgroundColor,
+        drawer: SideBar(),
         appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          iconTheme: IconThemeData(color: Colors.black),
           elevation: 0,
-          foregroundColor: Colors.white,
           title: TextField(
-            style: TextStyle(
-                fontFamily: 'Footlight',
-                color: Colors.white,
-                backgroundColor: Colors.white),
             decoration: InputDecoration(
-                border: UnderlineInputBorder(), hintText: 'Search...'),
+                hintStyle: TextStyle(
+                  fontFamily: 'Footlight',
+                  color: Colors.white,
+                ),
+                border: UnderlineInputBorder(),
+                hintText: 'Search...'),
           ),
           actions: [
             Container(
@@ -127,11 +124,9 @@ class _MyAppState extends State<MyHomePage> {
             )
           ],
         ),
-        body:
-            // Favouritesss(context, screenIndex),
-            Padding(
+        body: Padding(
           padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-          child: Compose(contacts), //Screens[screenIndex],
+          child: Home(),
         ),
       ),
     );
